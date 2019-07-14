@@ -3,6 +3,19 @@ import React from 'react'
 import { Editor } from 'slate-react'
 import Html from 'slate-html-serializer'
 
+// theme
+import './github-markdown.css'
+
+// block-code editor
+import '../node_modules/codemirror/lib/codemirror.css'
+import CodeMirror from '../node_modules/codemirror/lib/codemirror.js'
+import "../node_modules/codemirror/mode/javascript/javascript.js"
+import "../node_modules/codemirror/addon/merge/merge.js"
+
+// custom
+import './App.css'
+
+
 const BLOCK_TAGS = {
     blockquote: 'block-quote',
     pre: 'block-code',
@@ -54,12 +67,14 @@ const rules = [
                         return <h2>{children}</h2>
                     case 'heading-three':
                         return <h3>{children}</h3>
-                     case 'heading-four':
+                    case 'heading-four':
                         return <h4>{children}</h4>
                     case 'heading-five':
                         return <h5>{children}</h5>
                     case 'heading-six':
                         return <h6>{children}</h6>
+                    default:
+                        return <p></p>
                 }
             }
         },
@@ -101,6 +116,30 @@ class App extends React.Component {
     // Set the initial value when the app is first constructed.
     state = {
         value: html.deserialize(initialValue),
+    }
+
+    constructor(props) {
+        super(props)
+        this.codeMirrorContainer = React.createRef()
+    }
+
+    // Render the editor.
+    render() {
+        return <div className="App markdown-body" >
+            <div className="" ref={this.codeMirrorContainer}></div>
+            <Editor value={this.state.value}
+                onChange={this.onChange}
+                onKeyDown={this.onKeyDown}
+                renderBlock={this.renderBlock} />
+        </div>
+    }
+
+    componentDidMount() {
+        CodeMirror.MergeView(this.codeMirrorContainer.current, {
+            value: 'function test() { 1 + 1 \n}',
+            mode: 'javascript',
+            lineNumbers: true
+        });
     }
 
     getType = chars => {
@@ -217,14 +256,6 @@ class App extends React.Component {
 
         event.preventDefault()
         editor.splitBlock().setBlocks('paragraph')
-    }
-
-    // Render the editor.
-    render() {
-        return <Editor value={this.state.value}
-            onChange={this.onChange}
-            onKeyDown={this.onKeyDown}
-            renderBlock={this.renderBlock}/>
     }
 
     renderBlock = (props, editor, next) => {
