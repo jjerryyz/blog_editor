@@ -1,26 +1,49 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Value } from "slate";
+import CannerEditor from "canner-slate-editor";
+// import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const initialValue = Value.fromJSON({
+  document: {
+    nodes: [
+      {
+        object: "block",
+        type: "paragraph",
+        nodes: [
+          {
+            object: "text",
+            leaves: [
+              {
+                text: "A line of text in a paragraph."
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+});
+
+class App extends React.Component {
+  // Set the initial state when the app is first constructed.
+  state = {
+    value: initialValue
+  };
+
+  onChange = ({value}) => {
+    this.setState({value})
+  }
+
+  render() {
+    return (
+      <div style={{ margin: "20px" }}>
+        <CannerEditor
+          value={this.state.value} 
+          onChange={this.onChange}
+           />
+      </div>
+    );
+  }
 }
 
 export default App;
