@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "antd": "^3.20.2",
+    "axios": "^0.19.0",
     "canner-slate-editor": "^1.5.4",
     "immutable": "^4.0.0-rc.12",
     "react": "^16.8.6",

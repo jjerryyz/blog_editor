@@ -2,6 +2,7 @@ import React from 'react';
 import { Value } from "slate";
 import CannerEditor from "canner-slate-editor";
 // import './App.css';
+const axios = require('axios');
 
 const initialValue = Value.fromJSON({
   document: {
@@ -35,15 +36,16 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:8080/entry/title',{
-      method: 'GET', 
-      // A mode: 'no-cors' request makes the response type opaque. The console-log snippet in the question clearly shows that. And opaque means your frontend JavaScript code can’t see the response body or headers.
-      // mode: 'no-cors',
+
+    const url = 'http://localhost:8080/entry/title';
+    axios.get(url,{
       headers: {
         'Content-Type': 'application/json',
-      }
-    }).then(res => res.json())
-    .then(response => console.log(JSON.stringify(response)))
+      },
+    })
+    .then(response => 
+      console.log(JSON.stringify(response.data))
+      )
     .catch(error => console.log(error));
   }
 
