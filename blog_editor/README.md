@@ -335,6 +335,54 @@ function App() {
 
 - 组件中有一些声明周期方法，componentDidMount（挂载）算是一个
 
+#### 开箱即用
+
+创建一个React模板工程十分轻松，
+
+```shell
+npx create-react-app my-app
+cd my-app
+npm start
+```
+
+- npx是高版本的npm支持的工具
+- npm start 自动帮我们启动一个本地的测试环境
+
+一切就绪后，默认浏览器会打开localhost:3000，这意味着我们的第一个React工程已经创建好了
+
+#### 发布
+
+```
+npm run build
+```
+
+React会帮你编译一个发布版本，从结果看来，它帮你进行了代码压缩，优化等操作，最终拷贝到public目录下
+
+要看到发布后的效果，我们还需要自己启动一个backend，官方推荐使用serve
+
+```shell
+npm install serve -g
+serve -s build
+```
+
+#### 发送Http请求
+
+在React想发送http请求有三种选择:
+
+- 使用原生的Web Api - Fetch
+
+  服务器原生支持，兼容性并不那么好
+
+- 使用axios
+
+  最佳选择
+
+- 使用Jquery
+
+  不鼓励为了简单的请求数据就集成那么大一个库
+
+- 使用原生的XMLHttpRequestq
+
 
 
 ## Gatsby.js

@@ -34,6 +34,19 @@ class App extends React.Component {
     this.setState({value})
   }
 
+  componentDidMount() {
+    fetch('http://localhost:8080/entry/title',{
+      method: 'GET', 
+      // A mode: 'no-cors' request makes the response type opaque. The console-log snippet in the question clearly shows that. And opaque means your frontend JavaScript code can’t see the response body or headers.
+      // mode: 'no-cors',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }).then(res => res.json())
+    .then(response => console.log(JSON.stringify(response)))
+    .catch(error => console.log(error));
+  }
+
   render() {
     return (
       <div style={{ margin: "20px" }}>
