@@ -2,7 +2,7 @@ import React from 'react';
 import { Value } from "slate";
 import CannerEditor from "canner-slate-editor";
 // import './App.css';
-const axios = require('axios');
+import config from './config'
 
 const initialValue = Value.fromJSON({
   document: {
@@ -37,15 +37,9 @@ class App extends React.Component {
 
   componentDidMount() {
 
-    const url = 'http://localhost:8080/entry/title';
-    axios.get(url,{
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-    .then(response => 
-      console.log(JSON.stringify(response.data))
-      )
+    const url = config.base_url + '/entry/title';
+    fetch(url)
+    .then(response => console.log(JSON.stringify(response.data)))
     .catch(error => console.log(error));
   }
 
