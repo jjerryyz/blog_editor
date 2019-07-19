@@ -2,7 +2,6 @@ import React from 'react';
 import "../node_modules/bootstrap/dist/css/bootstrap.css"
 import './App.css'
 import config from './config'
-import axios from 'axios'
 import qs from 'qs'
 
 class Login extends React.Component {
@@ -30,9 +29,10 @@ class Login extends React.Component {
         fetch(url, {
             method: 'POST',
             headers: {'content-type': 'application/x-www-form-urlencoded'},
+            // 对象转为 query string
             body: qs.stringify(data),
         }).then(response =>
-            console.log('ok')
+            console.log(JSON.stringify(response))
         ).catch(error => console.log(error));
     }
 
