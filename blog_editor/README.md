@@ -397,4 +397,47 @@ Gatsby.js是对静态网站方向的React脚手架，开箱即用
 
 ## Next.js
 
-Next.js貌似是一个更好的选择，然而还没开始用就让我注册这一点马上把我逼退了
+
+
+## 跳转逻辑
+
+#### 不用React-Router
+
+完全不依赖组件库也是可以实现组件跳转的，要实现这一点首先要理解React框架实现的是一个单页应用
+
+所谓的跳转实际上就是上层不同页面的切换，可以简单的如下实现：
+
+- 父级组件向下暴露改变页面的方法
+- 当子组件调用方法时，父级组件根据改变的值渲染不同的子组件
+
+```javascript
+class App extends React.Component {
+
+    state = {
+        index: 1
+    }
+
+    go=(index)=> {
+        this.setState({index: index})
+    }
+
+    render() {
+        if (this.state.index == 1) {
+            return (<Page1 go={this.go} />)
+        } else if(this.state.index == 2){
+            return (<Page2 go={this.go}/>)
+        }
+    }
+}
+
+class Page1 extends React.Component {
+	...
+    this.prop.go(2) // 切换到页面2
+    ...
+}
+```
+
+
+
+#### 使用React-Router
+

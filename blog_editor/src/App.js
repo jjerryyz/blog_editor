@@ -1,58 +1,26 @@
 import React from 'react';
-import { Value } from "slate";
-import CannerEditor from "canner-slate-editor";
-// import './App.css';
-import config from './config'
-
-const initialValue = Value.fromJSON({
-  document: {
-    nodes: [
-      {
-        object: "block",
-        type: "paragraph",
-        nodes: [
-          {
-            object: "text",
-            leaves: [
-              {
-                text: "A line of text in a paragraph."
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  }
-});
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import Login from './Login';
+import MyEditor from './MyEditor';
+import Home from './Home';
 
 class App extends React.Component {
-  // Set the initial state when the app is first constructed.
-  state = {
-    value: initialValue
-  };
 
-  onChange = ({value}) => {
-    this.setState({value})
-  }
+    go=(index)=> {
+        console.log(index)
+        this.setState({index: index})
+    }
 
-  componentDidMount() {
-
-    const url = config.base_url + '/entry/title';
-    fetch(url)
-    .then(response => console.log(JSON.stringify(response.data)))
-    .catch(error => console.log(error));
-  }
-
-  render() {
-    return (
-      <div style={{ margin: "20px" }}>
-        <CannerEditor
-          value={this.state.value} 
-          onChange={this.onChange}
-           />
-      </div>
-    );
-  }
+    render() {
+        return (
+        <Router>
+            <div className="inner">
+                <Route path="/home" component={Home} />
+                <Route path="/login" component={Login} />
+                <Route path="/entry" component={MyEditor} />
+            </div>
+        </Router>)
+    }
 }
 
-export default App;
+export default App

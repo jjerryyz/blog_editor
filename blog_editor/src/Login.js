@@ -20,6 +20,8 @@ class Login extends React.Component {
     login = (e) => {
         console.log('login')
         e.preventDefault()
+        this.props.go(1)
+        return
 
         const url = config.base_url + '/auth/login';
         const data = {
@@ -31,9 +33,11 @@ class Login extends React.Component {
             headers: {'content-type': 'application/x-www-form-urlencoded'},
             // 对象转为 query string
             body: qs.stringify(data),
-        }).then(response =>
-            console.log(JSON.stringify(response))
-        ).catch(error => console.log(error));
+        }).then(response => {
+            if (response.status == 200) {
+                this.props.history.push('/')
+            }
+        }).catch(error => console.log(error));
     }
 
     onChangeUser= (e)=>{
